@@ -32,8 +32,8 @@ reach to best accruacy with data sets having large distribution per each class
 - warmup scheduler(Linear) 
 - main scheudler(ConsineAnnealingLR)
 ### config
-- epoch : 10 -> 50 -> 100->120->200
-- batchsize : 128->64->32->64
+- epoch : 10 -> 50 -> 100->120->200->150
+- batchsize : 128->64->256->512->256
 ### DataAugumentation
 - RandomHorizontalFlip
 - RandomAugment
@@ -41,17 +41,18 @@ reach to best accruacy with data sets having large distribution per each class
 - MixUp / CutMix
 ### TEST
 - TTA 2 data augumentation
-### Model(Resnet18)
-- custom Resnet(same as 2blocks but different scale : 32-64-128-256, add dropout)->64(3)-128-256
-- > 64-128-256-512(each of them has two blocks)
+### Model(ConvNext-tiny)
+- ConvNext-tiny(motived by transformer)
 - label smoothing 
 - Stochastic Depth
-- SE Block
 
 ## 📅 Key milestone(summary)
 - **Feb 03** use model used in first competition and analysis the problems
 - **Feb 04** change model to resnet 34
 - **Feb 05** change model to ConvNext-Tiny
+- **Feb 06** reduce data augumentation and change head of network(more deeply)
+- **Feb 07** increase image size(128->176) and adjust data augumentation(stable learning)
+
 
 
 
@@ -103,6 +104,33 @@ reach to best accruacy with data sets having large distribution per each class
 - too much Data augmentation (mixup + cutmix + randaugement), start with less aug, and gradually augment
 - scaling resoultion(?)
 
+
+### Trial(Feb 06)
+- reduce augumentation and change to head in model
+### result
+- running basic code(accuracy 60%)
+
+
+
+### problem
+- overfitting
+### Analysis
+- increase size(after passing the whole layers).. it is just 4*4 images
+- adjust augumentation(not overfitting, not underfitting)
+
+### Trial(Feb 07)
+- increase image size and increas reduce drop rate
+### result
+- running basic code(accuracy 80%)
+
+
+
+### problem
+- overall it looks training well(without any overfitting or undertraining phenomenon)
+- need to find way to squeeze accuracy
+### Analysis
+- increasing size looks so very effective(increase almost 10% accuracy.. but.. training time increase explosively as well)
+- increase a little bit more image size and change GPU to A100(?)
 
 
 
