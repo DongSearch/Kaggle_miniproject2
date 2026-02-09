@@ -52,7 +52,8 @@ reach to best accruacy with data sets having large distribution per each class
 - **Feb 05** change model to ConvNext-Tiny
 - **Feb 06** reduce data augumentation and change head of network(more deeply)
 - **Feb 07** increase image size(128->176) and adjust data augumentation(stable learning)
-
+- **Feb 08** add focal loss and resize image
+- 
 
 
 
@@ -135,6 +136,26 @@ reach to best accruacy with data sets having large distribution per each class
 - increase a little bit more image size and change GPU to A100(?) -> 192
 - label_smoothing -> 0.05
 -  Fokal loss
+
+
+### Trial(Feb 08)
+- increase image size and increas reduce drop rate
+### result
+- running basic code(accuracy 80%)
+<img width="1590" height="490" alt="image" src="https://github.com/user-attachments/assets/587cea70-a76c-48a8-8c71-cc0bed7bf804" />
+
+<img width="1935" height="790" alt="image" src="https://github.com/user-attachments/assets/c7061452-d0f9-4453-aeed-b854fac61b1c" />
+
+
+### problem
+- overall it looks training well(without any overfitting or undertraining phenomenon)
+- need to find way to squeeze accuracy
+### Analysis
+- increasing size looks so very effective(increase almost 10% accuracy.. but.. training time increase explosively as well)
+- increase a little bit more image size and change GPU to A100(?) -> 192
+- label_smoothing -> 0.05
+-  Fokal loss
+
 
 
 
