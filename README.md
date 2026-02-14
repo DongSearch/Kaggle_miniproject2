@@ -5,21 +5,19 @@ reach to best accruacy with data sets having large distribution per each class
 - training data : 70k,3x128x128, class:21(balanced dataset)
 - no pretrained model
 - no change number of seed(0)
-## Rank
 
 
 ## Used Algorithm
-- model : Custom RestNet + SE Block + Drop path : 64(2)-128(2)-256(2)-512(2) Blocks
+- model : ConvNext-Tiny
 - optimizer : Warmup LRscheduling(Linear) + main LRscheduling(CosineAnnealing) + AdamW 
-- Criterion : SoftTargetCrossEntorpy(for Mixup/Cutmix) + CrossEntropy + dynamic label-smoothing
+- Criterion : SoftTargetCrossEntorpy(for Mixup/Cutmix) + CrossEntropy + label-smoothing
 - Data-Preprocessing : RandAugment,HorizontalFlip,Mixup/Cutmix
-- Technique : TTA + EMA
+- Technique : TTA + EMA + Focal Loss + Autocast
 
-## Result(92% unofficially)
+## Result(81% unofficially)
 
-
-
-
+<img width="1590" height="490" alt="image" src="https://github.com/user-attachments/assets/b86188ab-f71d-42ad-8358-28f41e5f09f7" />
+<img width="1935" height="790" alt="image" src="https://github.com/user-attachments/assets/0a12b2d9-3e86-400e-856e-f6f8f79c2374" />
 
 
 
@@ -31,6 +29,7 @@ reach to best accruacy with data sets having large distribution per each class
 - Earlystopping
 - warmup scheduler(Linear) 
 - main scheudler(ConsineAnnealingLR)
+- Focal Loss
 ### config
 - epoch : 10 -> 50 -> 100->120->200->150
 - batchsize : 128->64->256->512->256
@@ -53,8 +52,6 @@ reach to best accruacy with data sets having large distribution per each class
 - **Feb 06** reduce data augumentation and change head of network(more deeply)
 - **Feb 07** increase image size(128->176) and adjust data augumentation(stable learning)
 - **Feb 08** add focal loss and resize image
-- 
-
 
 
 
@@ -139,22 +136,22 @@ reach to best accruacy with data sets having large distribution per each class
 
 
 ### Trial(Feb 08)
-- increase image size and increas reduce drop rate
+- increase image size and increas reduce drop rate(192)
+- Foakl loss (50% -> 61%)
 ### result
 - running basic code(accuracy 80%)
-<img width="1590" height="490" alt="image" src="https://github.com/user-attachments/assets/587cea70-a76c-48a8-8c71-cc0bed7bf804" />
-
-<img width="1935" height="790" alt="image" src="https://github.com/user-attachments/assets/c7061452-d0f9-4453-aeed-b854fac61b1c" />
+<img width="1590" height="490" alt="image" src="https://github.com/user-attachments/assets/b86188ab-f71d-42ad-8358-28f41e5f09f7" />
+<img width="1935" height="790" alt="image" src="https://github.com/user-attachments/assets/0a12b2d9-3e86-400e-856e-f6f8f79c2374" />
 
 
 ### problem
-- overall it looks training well(without any overfitting or undertraining phenomenon)
-- need to find way to squeeze accuracy
+- certain classes still have less accuracy compared to others(and wrong estimations spread evenly over whole classes, which is hard to capture which features give confusing to model)
+- increasing image size doesn't give any performance improvement any more
 ### Analysis
-- increasing size looks so very effective(increase almost 10% accuracy.. but.. training time increase explosively as well)
+- higher gamma on Fokal loss 
 - increase a little bit more image size and change GPU to A100(?) -> 192
 - label_smoothing -> 0.05
--  Fokal loss
+-  Fokal loss (gamma is 2)
 
 
 
